@@ -1,3 +1,20 @@
+Mendix tools
+---
+
+Private collection of tools used by me. These are mostly made for convenience when developing widgets for Mendix, but can span out further in the meantime. This here is a convenient place to keep them stored (lost some in the past, that's why I am making this Open Source).
+
+I'll try to document tools that are created, or explain them here. Use at own risk and for your own profit. If you have suggestions, please add an issue or better yet, create a PR!
+
+## Editor
+
+* Snippet file (`snippets.cson`) file for Atom. Mostly used as shorthands for various methods in Javascript and XML snippets.
+
+## Browser
+
+* Userscript for Greasemonkey. This will set the loglevel to `debug`, so all the `logger.debug(this.id + "_method")` lines show up in my Chrome Inspector.
+
+## License
+
 MIT License
 
 Copyright (c) 2017 Jelte Lagendijk <jelte.lagendijk@mendix.com>

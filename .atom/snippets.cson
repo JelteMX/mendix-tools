@@ -1,0 +1,146 @@
+# Your snippets
+#
+# Mendix specific snippets for Atom, used in Widget building. These may be changed over time. Shorthands for methods & XML
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+##################################
+## JAVASCRIPT SNIPPETS
+##################################
+
+'.source.js':
+  'Mendix log':
+    'prefix': 'log'
+    'body': 'logger.debug(this.id + ".$1");'
+  'Execute Microflow Method':
+    'prefix':'_execMf'
+    'body':"""
+      _execMf: function (mf, guid, cb) {
+          logger.debug(this.id + "._execMf");
+          if (mf && guid) {
+              mx.data.action({
+                  params: {
+                      applyto: "selection",
+                      actionname: mf,
+                      guids: [guid],
+                      origin: this.mxform
+                  },
+                  callback: lang.hitch(this, function (objs) {
+                      if (cb && typeof cb === "function") {
+                          cb(objs);
+                      }
+                  }),
+                  error: function (error) {
+                      console.debug(error.description);
+                  }
+              }, this);
+          }
+      },
+    """
+  'Execute callback':
+    'prefix':'_execCb'
+    'body':"""
+      _executeCallback: function (cb, from) {
+          logger.debug(this.id + "._executeCallback" + (from ? " from " + from : ""));
+          if (cb && typeof cb === "function") {
+              cb();
+          }
+      }
+    """
+    'description':'Add a private method to execute a callback'
+    'leftLabel':'void'
+  'Version check Mendix':
+    'prefix':'mxver'
+    'body':'(!mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 7)'
+    'description':'Mendix version check (below Mendix 7)'
+
+##################################
+## XML SNIPPETS
+##################################
+
+'.text.xml':
+  # PROPERTY ATTRIBUTE
+  'MX Widget Property: attribute':
+    'prefix':'propAttr'
+    'body':"""
+      <property key="$1" type="attribute" entityProperty="$2" required="$3" isPath="${4:no|optional|yes}">
+          <caption>$5</caption>
+          <category>$6</category>
+          <description>$7</description>
+          <attributeTypes>
+              <attributeType name="AutoNumber" />
+              <attributeType name="Binary" />
+              <attributeType name="Boolean" />
+              <attributeType name="DateTime" />
+              <attributeType name="Decimal" />
+              <attributeType name="Enum" />
+              <attributeType name="HashString" />
+              <attributeType name="Integer" />
+              <attributeType name="Long" />
+              <attributeType name="String" />
+          </attributeTypes>
+      </property>
+    """
+    'description':'Add a attribute property to XML'
+    'leftLabel':''
+  # PROPERTY ATTRIBUTE TYPE
+  'MX Widget attribute Types':
+    'prefix':'attrType'
+    'body':"""
+      <attributeType name="AutoNumber" />
+      <attributeType name="Binary" />
+      <attributeType name="Boolean" />
+      <attributeType name="DateTime" />
+      <attributeType name="Decimal" />
+      <attributeType name="Enum" />
+      <attributeType name="HashString" />
+      <attributeType name="Integer" />
+      <attributeType name="Long" />
+      <attributeType name="String" />
+    """
+    'description':'Add all possible attribute types, used in <attributeTypes>'
+    'leftlabel':''
+  # PROPERTY STRING
+  'MX Widget Property: string':
+    'prefix':'propStr'
+    'body':"""
+      <property key="$1" type="string" required="$2" defaultValue="$3">
+          <caption>$4</caption>
+          <category>$5</category>
+          <description>$6</description>
+      </property>
+    """
+    'description':'Add a string property to XML'
+    'leftLabel':''
+  # PROPERTY STRING
+  'MX Widget Property: list':
+    'prefix':'propLs'
+    'body':"""
+      <property key="$1" type="object" isList=" true" required="$2">
+          <caption>$3</caption>
+          <category>$4</category>
+          <description>$5</description>
+          <properties>
+
+          </properties>
+      </property>
+    """
+    'description':'Add object list property to XML'
+    'leftLabel':''
+
+
+      ## <xs:enumeration value="attribute"/>
+      # <xs:enumeration value="boolean"/>
+      # <xs:enumeration value="entity"/>
+      # <xs:enumeration value="entityConstraint"/>
+      # <xs:enumeration value="enumeration"/>
+      # <xs:enumeration value="form"/>
+      # <xs:enumeration value="image"/>
+      # <xs:enumeration value="integer"/>
+      # <xs:enumeration value="microflow"/>
+      # <xs:enumeration value="object"/>
+      ## <xs:enumeration value="string"/>
+      # <xs:enumeration value="translatableString"/>
