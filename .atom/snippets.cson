@@ -21,12 +21,10 @@
       _execMf: function (mf, guid, cb) {
           logger.debug(this.id + "._execMf");
           if (mf && guid) {
-              mx.data.action({
+              mx.ui.action(mf, {
                   params: {
                       applyto: "selection",
-                      actionname: mf,
-                      guids: [guid],
-                      origin: this.mxform
+                      guids: [guid]
                   },
                   callback: lang.hitch(this, function (objs) {
                       if (cb && typeof cb === "function") {
@@ -55,7 +53,7 @@
   'Version check Mendix':
     'prefix':'mxver'
     'body':'(!mx.version || mx.version && parseInt(mx.version.split(".")[0]) < 7)'
-    'description':'Mendix version check (below Mendix 7)'
+    'description':'Mendix version check'
 
 ##################################
 ## XML SNIPPETS
@@ -115,7 +113,7 @@
     """
     'description':'Add a string property to XML'
     'leftLabel':''
-  # PROPERTY STRING
+  # PROPERTY LIST
   'MX Widget Property: list':
     'prefix':'propLs'
     'body':"""
@@ -130,17 +128,31 @@
     """
     'description':'Add object list property to XML'
     'leftLabel':''
-
-
-      ## <xs:enumeration value="attribute"/>
-      # <xs:enumeration value="boolean"/>
-      # <xs:enumeration value="entity"/>
-      # <xs:enumeration value="entityConstraint"/>
-      # <xs:enumeration value="enumeration"/>
-      # <xs:enumeration value="form"/>
-      # <xs:enumeration value="image"/>
-      # <xs:enumeration value="integer"/>
-      # <xs:enumeration value="microflow"/>
-      # <xs:enumeration value="object"/>
-      ## <xs:enumeration value="string"/>
-      # <xs:enumeration value="translatableString"/>
+  # PROPERTY MF
+  'MX Widget Property: microflow':
+    'prefix':'propMf'
+    'body':"""
+      <property key="$1" type="microflow" required="$2" entityProperty="selectEntityOrDelete">
+          <caption>$3</caption>
+          <category>$4</category>
+          <description>$5</description>
+          <returnType type="$6">
+      </property>
+    """
+    'description':'Add microflow property to XML'
+    'leftLabel':''
+  # PROPERTY ENUM
+  'MX Widget Property: enumeration':
+    'prefix':'propEn'
+    'body':"""
+      <property key="$1" type="enumeration" defaultValue="first">
+          <caption>$3</caption>
+          <category>$4</category>
+          <description>$5</description>
+          <enumerationValues>
+            <enumerationValue key="first">Virst value</enumerationValue>
+          </enumerationValues>
+      </property>
+    """
+    'description':'Add enumeration property to XML'
+    'leftLabel':''
